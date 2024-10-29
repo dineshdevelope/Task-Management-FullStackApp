@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 const __dirname = path.resolve();
 
-const PORT = 6969;
+const PORT = 5000;
 
 app.use(cors());
 
@@ -19,17 +19,13 @@ app.use(express.urlencoded({ extented: true }));
 //Connect Db
 connectDb();
 
-app.get("/", (req, res) => {
-  res.json({ msg: "Hello Users Welcome to My App !" });
-});
-
 //Middleware
 app.use("/user", userRoute);
 
 if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/client/build")));
+  app.use(express.static(path.join(__dirname, "/client/dist")));
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "client", "build", "index.html"));
+    res.sendFile(path.resolve(__dirname, "client", "dist", "index.html"));
   });
 }
 
